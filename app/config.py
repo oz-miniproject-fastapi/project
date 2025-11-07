@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 
-load_dotenv()  # .env 파일 읽어서 os.environ에 적용
+load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")

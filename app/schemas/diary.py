@@ -1,26 +1,31 @@
-# app/schemas/diary.py
 from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+
 
 class DiaryCreate(BaseModel):
-    title: str = Field(..., max_length=100)
-    content: str = Field(...)
-    tags: Optional[List[str]] = Field(default=[])
-    emotion_keywords: Optional[List[str]] = Field(default=[])
+    # 일기 작성 요청
+    title: str
+    content: str
+    tags: list[str] = []
+    emotion_keywords: list[str] = []
+
 
 class DiaryUpdate(BaseModel):
-    title: Optional[str] = Field(None, max_length=100)
-    content: Optional[str] = Field(None)
-    tags: Optional[List[str]] = None
-    emotion_keywords: Optional[List[str]] = None
+    # 일기 수정 요청
+    title: Optional[str] = None
+    content: Optional[str] = None
+    tags: Optional[list[str]] = None
+    emotion_keywords: Optional[list[str]] = None
+
 
 class DiaryResponse(BaseModel):
+    # 일기 응답
     id: int
     title: str
     content: str
-    tags: List[str] = []
-    emotion_keywords: List[str] = []
+    tags: list[str] = []
+    emotion_keywords: list[str] = []
     created_at: datetime
     updated_at: datetime
 

@@ -6,7 +6,7 @@ class UserService:
     def __init__(self, db):
         self.db = db
 
-    # --- 내 프로필 조회 ---
+    #  내 프로필 조회 -
     async def get_profile(self, user_id: int) -> UserProfileResponse:
         try:
             user = await User.get(id=user_id)
@@ -21,7 +21,7 @@ class UserService:
         except DoesNotExist:
             raise ValueError("User not found")
 
-    # --- 내 정보 수정 ---
+    # 내 정보 수정
     async def update_user(self, user_id: int, data: dict) -> UserProfileResponse:
         try:
             user = await User.get(id=user_id)
@@ -39,7 +39,7 @@ class UserService:
         except DoesNotExist:
             raise ValueError("User not found")
 
-    # --- 내 계정 삭제 ---
+    #  내 계정 삭제
     async def delete_user(self, user_id: int) -> UserDeleteResponse:
         try:
             user = await User.get(id=user_id)

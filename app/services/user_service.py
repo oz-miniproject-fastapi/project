@@ -1,10 +1,10 @@
-from app.models.user import User
-from app.schemas.user import UserProfileResponse, UserUpdateRequest, UserDeleteResponse
 from tortoise.exceptions import DoesNotExist, IntegrityError
+from app.models.user import User
+from app.schemas.user import UserProfileResponse, UserDeleteResponse
+
 
 class UserService:
-
-    # --- 내 프로필 조회 ---
+    # 프로필 조회
     async def get_profile(self, user: User) -> UserProfileResponse:
         return UserProfileResponse(
             id=user.id,
@@ -12,31 +12,31 @@ class UserService:
             nickname=user.nickname,
             name=user.name,
             phone=user.phone,
-            created_at=user.created_at
+            created_at=user.created_at,
         )
 
-    # --- 내 정보 수정 ---
+    # 사용자 정보 수정
     async def update_user(self, user: User, data: dict) -> UserProfileResponse:
         for key, value in data.items():
             setattr(user, key, value)
         await user.save()
+
         return UserProfileResponse(
             id=user.id,
             email=user.email,
             nickname=user.nickname,
             name=user.name,
             phone=user.phone,
-            created_at=user.created_at
+            created_at=user.created_at,
         )
 
-    # --- 내 계정 삭제 ---
+    # 사용자 삭제
     async def delete_user(self, user: User) -> UserDeleteResponse:
         try:
             await user.delete()
-            return UserDeleteResponse(status="success", message="User deleted")
+            return UserDeleteResponse(message="User deleted successfully")
         except IntegrityError:
-            raise ValueError("Cannot delete user: related data exists")
+            raise ValueError("삭제할 수 없습니다. 관련 데이터가 존재합니다.")
         except Exception as e:
-            import traceback
-            print(traceback.format_exc())
+            print(f"Unexpected error: {e}")
             raise
